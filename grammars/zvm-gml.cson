@@ -1,0 +1,107 @@
+
+# Change summary
+# - Wrote syntax rules based an example document
+
+# After editing this file, CTL-SHIFT-F5 or C-S-P window:reload to update the active editor with the revised grammar.
+# editor:log-cursor-scope to see which selectors (example: comment.block...) the grammar applies at the cursor's location.
+
+'scopeName': 'source.GML'
+'name': 'GML'
+'fileTypes': ['SCRIPT']
+
+'patterns': [
+    { 'include': '#comment-rule' },
+    { 'include': '#gml-comment-rule' },
+    { 'include': '#script-command-rule' },
+    { 'include': '#script-label-rule' },
+    { 'include': '#gml-rule' },
+    { 'include': '#variable-rule' },
+    { 'include': '#single-quoted-string-rule' },
+]
+
+'repository': {
+    'comment-rule': {
+        # Non-data lines: .* in column 1, rest of line is a comment
+        'match': '^[.][*].*'
+        'name': 'comment.block.GML'
+    },
+    # If you try combining the label rule and the command rule, you end
+    # up with ^.* (since both label and command must be optional), and
+    # that causes Atom to "pop" the rule (but that message is visible only
+    # in the console log).
+    'script-label-rule': {
+        # Script label, with no content after that on the line
+        'match': '^([.]{3}\\w+)\\s*'
+        'captures': {
+          '1': { 'name': 'entity.name.GML'},
+        }
+    },
+    'script-command-rule': {
+        # Script commands: . in column 1 + alpha in column 2
+        #                  with optional label ...alphanum in front
+        'match': '^([.]{3}\\w+\\s)?([.]\\w+\\s)'
+        'captures': {
+          '1': { 'name': 'entity.name.GML'},
+          '2': { 'name': 'entity.name.tag.GML'},
+        }
+        # TODO: Make this functional.  Currently it is approximated by
+        #       omitting the trailing .* from the match rule, so the rest
+        #       of the line is processed by the existing rule.  The problem
+        #       is that the general rule will cause spurious matches, like
+        #       when ' is used as an apostrophe.
+        'patterns': [
+            {
+              'include': '#single-quoted-string-rule'
+              'name': 'support.function.GML'  # just to stand out temp'ly
+            }
+        ]
+    },
+    'gml-rule': {
+        # TODO: Handle parameters, multiple lines for 1 tag
+        'match': '[:]\\w+[.]?'
+        'name': 'entity.name.tag.GML'
+    },
+    'variable-rule': {
+        'match': '([&])(\\w+)([.]?)'
+        'captures': {
+          '1': { 'name': 'punctuation.definition.variable.begin.GML'},
+          '2': { 'name': 'variable.GML'},
+          '3': { 'name': 'punctuation.definition.variable.end.GML'},
+        }
+    },
+    'single-quoted-string-rule': {
+      # Trying a simpler version than Rexx since script strings ALWAYS terminate on the same line
+        'match': '([\'])([^\']*)([\'])'
+        'captures': {
+          '1': { 'name': 'punctuation.definition.string.begin.GML'},
+          '2': { 'name': 'string.quoted.single.GML'},
+          '3': { 'name': 'punctuation.definition.string.end.GML'},
+        }
+    },
+    'gml-comment-rule': {
+      # Confirmed by testing that :annot. tags DO NOT nest.
+      'begin': '^\\s*:annot[.]\\s*'
+      'beginCaptures':
+          '0':
+              'name': 'entity.name.tag.GML'
+      'end': '^\\s*:eannot[.]\\s*'
+      'endCaptures':
+          '0':
+              'name': 'entity.name.tag.GML'
+      'name': 'comment.block.GML'
+      'patterns': [
+            {
+              'include': '#nested-annot-rule'
+            }
+        ]
+    },
+    'nested-annot-rule': {
+        'match': '^\\s*:annot[.]\\s*'
+        'name': 'invalid.illegal.GML'
+    },
+}
+
+# References
+#https://www.sitepoint.com/how-to-write-a-syntax-highlighting-package-for-atom/
+#https://manual.macromates.com/en/language_grammars
+#http://www.regular-expressions.info/characters.html

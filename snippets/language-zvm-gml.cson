@@ -1,0 +1,39 @@
+'.source.GML':
+  #
+  'ordered-list':
+    'prefix': 'ol'
+    'body': """
+      :ol $1.
+      :li.$0
+      :li.
+      :li.
+      :li.
+      :eol.
+    """
+  #
+  'unordered-list':
+    'prefix': 'ul'
+    'body': """
+      :ul $1.
+      :li.$0
+      :li.
+      :li.
+      :li.
+      :eul.
+    """
+  #
+  'highlighted-phrase-1':
+    'prefix': 'hp1'
+    'body': ":hp1.$1:ehp1.$0"
+  #
+  'example-phrase':
+    'prefix': 'xph'
+    'body': ":xph.$1:exph.$0"
+  #
+  'paragraph':
+    'prefix': 'p'
+    'body': ":p."
+  #
+  'system-programmer':
+    'prefix': 'sysprog'
+    'body': "system programmer"
