@@ -1,7 +1,7 @@
 {
   "name": "language-zvm-gml",
   "main": "./lib/language-zvm-gml",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Syntax highlighting for z/VM SCRIPT files, containing Script and/or BookMaster tags",
   "keywords": [
     "language",

@@ -10,7 +10,7 @@ module.exports = LanguageZvmGml =
   activate: (state) ->
     @languageZvmGmlView = new LanguageZvmGmlView(state.languageZvmGmlViewState)
     @modalPanel = atom.workspace.addModalPanel(item: @languageZvmGmlView.getElement(), visible: false)
-    @languageArweScriptView.clickToHide(@modalPanel)
+    @languageZvmGmlView.clickToHide(@modalPanel)
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
