@@ -37,3 +37,11 @@
   'system-programmer':
     'prefix': 'sysprog'
     'body': "system programmer"
+  #
+  'racfvm':
+    'prefix': 'racfvm'
+    'body': "RACF/VM"
+  #
+  'smapi':
+    'prefix': 'smapi'
+    'body': "SMAPI"
