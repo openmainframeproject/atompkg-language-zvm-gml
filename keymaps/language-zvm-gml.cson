@@ -14,5 +14,5 @@
 
 # For more detailed documentation see
 # https://atom.io/docs/latest/behind-atom-keymaps-in-depth
-#'atom-workspace':
-#  'ctrl-alt-o': 'language-zvm-gml:toggle'
+'atom-text-editor':
+  'ctrl-alt-v': 'language-zvm-gml:addRevisionBars'
