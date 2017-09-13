@@ -41,11 +41,11 @@ module.exports = LanguageZvmGml =
 
   toggle: ->
     if @modalPanel.isVisible()
-      console.log 'LanguageZvmGml was toggled, visible >> invisible'  if @debugging
+      console.log @userVisiblePackageName + ' was toggled, visible >> invisible'  if @debugging
       @modalPanel.hide()
       @elementHadFocus?.focus()
     else
-      console.log 'LanguageZvmGml was toggled, visible << invisible' if @debugging
+      console.log @userVisiblePackageName + ' was toggled, visible << invisible' if @debugging
       @modalPanel.show()
       @elementHadFocus = document.activeElement
       @modalPanel.getItem().focus()  # Needed for clickToHide to work
