@@ -1,7 +1,7 @@
 {
   "name": "language-zvm-gml",
   "main": "./lib/language-zvm-gml",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Syntax highlighting for z/VM SCRIPT files, containing Script and/or BookMaster tags",
   "keywords": [
     "language",
@@ -10,8 +10,12 @@
     "syntax"
   ],
   "activationCommands": {
-    "atom-workspace": "language-zvm-gml:toggle"
+    "atom-workspace": "language-zvm-gml:toggle",
+    "atom-text-editor": "language-zvm-gml:addRevisionBars"
   },
+  "activationHooks": [
+    "language-zvm-gml:grammar-used"
+  ],
   "repository": "https://github.com/openmainframeproject/atompkg-language-zvm-gml",
   "license": "Apache 2",
   "comment": "See NOTICE.md for copyright notices",

@@ -1,3 +1,6 @@
+## 0.1.2 - New function to add BookMaster revision bars
+* New `addRevisionBars` command to add :rev/:erev around current editor cursor(s), mapped to CTL-ALT-V by default, with the refid value supplied in a package setting
+
 ## 0.1.1 - Bug fix
 * Toggle command throws an exception due to a publishing typo
 

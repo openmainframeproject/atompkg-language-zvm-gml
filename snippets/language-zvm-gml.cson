@@ -1,3 +1,8 @@
+
+# - Yes, the triggers DO NOT include the leading : ... see
+#   https://github.com/openmainframeproject/atompkg-language-zvm-gml/issues/2
+#   for why that's currently A Good Thing.
+
 '.source.GML':
   #
   'ordered-list':
@@ -37,3 +42,11 @@
   'system-programmer':
     'prefix': 'sysprog'
     'body': "system programmer"
+  #
+  'racfvm':
+    'prefix': 'racfvm'
+    'body': "RACF/VM"
+  #
+  'smapi':
+    'prefix': 'smapi'
+    'body': "SMAPI"

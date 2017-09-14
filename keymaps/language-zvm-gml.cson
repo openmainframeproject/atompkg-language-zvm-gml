@@ -4,6 +4,7 @@
 # - Commented out all generated "code", since this package is not supplying
 #   any default key bindings.  Commented it out rather than deleting it
 #   in case default key bindings are needed in the future.
+# - add addRevisionBars binding
 
 # Keybindings require three things to be fully defined: A selector that is
 # matched against the focused element, the keystroke and the command to
@@ -14,5 +15,5 @@
 
 # For more detailed documentation see
 # https://atom.io/docs/latest/behind-atom-keymaps-in-depth
-#'atom-workspace':
-#  'ctrl-alt-o': 'language-zvm-gml:toggle'
+'atom-text-editor':
+  'ctrl-alt-v': 'language-zvm-gml:addRevisionBars'
