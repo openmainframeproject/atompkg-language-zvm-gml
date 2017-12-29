@@ -56,30 +56,37 @@ module.exports = LanguageZvmGml =
   #   because it's inserting text, and ranges do not get adjusted for
   #   inserts on the fly (while markers do get adjusted).
   addRevisionBars: ->
-    editor = atom.workspace.getActiveTextEditor()
-    console.log "addRevisionBars ", editor if @debugging
-    if editor?
-      selectedRanges = editor.getSelectedBufferRanges()
-      selectedMarkers = []
-      markerProperties = { "invalidate": "never"}
-      selectedMarkers.push( editor.markBufferRange(oneRange,markerProperties) ) for oneRange , i in selectedRanges
-      console.log "addRevisionBars markers ", selectedMarkers if @debugging
-      @addRevisionBarsToRange editor, m for m in selectedMarkers
-
-  addRevisionBarsToRange: (editor, oneMarker) ->
-    r = oneMarker.getBufferRange()
-    console.log "addRevisionBarsToRange: ", editor, oneMarker , r if @debugging
+    console.log "addRevisionBars entry" if @debugging
     refid = atom.config.get @userVisiblePackageName+".revisionRefid"
     if refid
-      editor.setCursorBufferPosition([r.start.row , 0])
-      editor.insertText(":rev refid=" + refid + ".\n")
-      # Update the range, whose bounds do not reflect the just-inserted text
-      r = oneMarker.getBufferRange()
-      editor.setCursorBufferPosition([r.end.row+1 , 0])
-      editor.insertText(":erev refid=" + refid + ".\n")
+      beforeText = ":rev  refid=" + refid + ".\n"
+      afterText  = ":erev refid=" + refid + ".\n"
+      editor = atom.workspace.getActiveTextEditor()
+      console.log "addRevisionBars ", editor if @debugging
+      if editor?
+        selectedRanges = editor.getSelectedBufferRanges()
+        selectedMarkers = []
+        markerProperties = { "invalidate": "never"}
+        selectedMarkers.push( editor.markBufferRange(oneRange,markerProperties) ) for oneRange , i in selectedRanges
+        console.log "addRevisionBars markers ", selectedMarkers if @debugging
+        @addRevisionBarsToRange editor, m, beforeText, afterText for m in selectedMarkers
     else
       atom.notifications.addWarning("The revision's refid is empty.  Set the value in the package's settings.",
       {dismissable:true,
       detail: "Open File > Settings > Packages, filter on " + @userVisiblePackageName +
       ", click on the Settings control for that package, scroll to its Settings section, " +
       "and set it to a non-blank value."})
+
+  addRevisionBarsToRange: (editor, oneMarker, beforeText, afterText) ->
+    r = oneMarker.getBufferRange()
+    if r.start.row != r.end.row and r.start.column == 0 and r.end.column == 0
+      countFinalRow = 0 # Manually selected an entire line "the easy way"
+    else
+      countFinalRow = 1
+    console.log "addRevisionBarsToRange: ", editor, oneMarker , r , countFinalRow if @debugging
+    editor.setCursorBufferPosition([r.start.row , 0])
+    editor.insertText(beforeText)
+    # Update the range, whose bounds do not reflect the just-inserted text
+    r = oneMarker.getBufferRange()
+    editor.setCursorBufferPosition([r.end.row+countFinalRow , 0])
+    editor.insertText(afterText)
